@@ -12,6 +12,8 @@ sudoku.
 2. `nim c solver.nim` or `nim c -d:release solver.nim` for release build
 
 ## Running
+Make sure you have installed a SAT solver such as [riss](https://github.com/nmanthey/riss-solver) or [glucose](http://www.labri.fr/perso/lsimon/glucose/), and it's available on your `PATH` environment variable.
+
 ```sh
 ./solver --solver glucose input.sudoku.txt
 ```
