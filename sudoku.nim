@@ -106,13 +106,6 @@ proc deserialize*(s: Stream): Sudoku =
     )
 
 
-proc log10(x: Natural): Natural =
-    result = 0
-    var n = x
-    while n > 0:
-        n = n div 10
-        result += 1
-
 proc serialize*(sudoku: Sudoku, input: Stream, output: Stream) =
     var
         line = ""
