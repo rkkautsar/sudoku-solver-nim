@@ -79,8 +79,8 @@ proc deserialize*(s: Stream): Sudoku =
         blockLookup = initTable[tuple[blk, num: int], tuple[row, col: int]]()
     
     while s.readLine(line):
-        if line.startsWith("puzzle size:"):
-            size = parseInt(line.split("x")[1])
+        if line.startsWith("+"):
+            size = line.count('+') - 1
         if line.startsWith("|"):
             row += 1
             col = 0
@@ -133,12 +133,7 @@ proc serialize*(sudoku: Sudoku, input: Stream, output: Stream) =
     for cellValue in sudoku.known:
         let (row, col, num) = cellValue
         board[row - 1][col - 1] = num
-    
-    output.writeLine(fmt"experiment: {$sudoku.size}x{$sudoku.size}")
-    output.writeLine("number of tasks: 1")
-    output.writeLine("task: 1")
-    output.writeLine(fmt"puzzle size: {$sudoku.size}x{$sudoku.size}")
-    
+
     let digitWidth = log10(n)
     let lineSeparator = ("+" & "-".repeat(1 + (digitWidth + 1) * sudoku.size)).repeat(sudoku.size) & "+"
 
@@ -159,9 +154,7 @@ proc generateNegatives(sudoku: Sudoku): IntSet =
 
     result = initIntSet()
     for cellValue in sudoku.known:
-        # let (i, cellValue) = pair
         let (row, col, num) = cellValue
-        # if i mod 1000 == 1: log fmt"{i}/{sudoku.known.len}"
 
         # cell
         for lit in lc[sudoku.literal((row, col, i)) | (i <- 1..n, i != num), Literal]:
