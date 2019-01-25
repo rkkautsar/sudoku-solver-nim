@@ -20,11 +20,12 @@ Encoding is based on the works of [Kwon and Jain][1] and at-most-one encoding by
 
 The possible values of each cell is encoded as 3-tuple `(row, col, num)` boolean literal (can be **true** or **false**), that states the truth value of "the cell at `(row, col)` is filled with the number `num`".
 
-Then the rules is described as follow:
-    1. Each cell `(row, col)` has *exactly one* `num`.
-    2. For each row `row`, `num` has to be in *exactly one* column `col`.
-    3. For each column `col`, `num` has to be in *exactly one* row `row`.
-    4. For each block (or mini-square), `num` has to be in *exactly one* `(row, col)` in that block.
+Then the rules is described as follows:
+
+1. Each cell `(row, col)` has *exactly one* `num`.
+2. For each row `row`, `num` has to be in *exactly one* column `col`.
+3. For each column `col`, `num` has to be in *exactly one* row `row`.
+4. For each block (or mini-square), `num` has to be in *exactly one* `(row, col)` in that block.
 
 Instead of putting the prefilled numbers from the input as a unit clause `(row, col, num)`, we instead generates a set of **false** literals that is filtered when generating the rules. As reported by [Kwon and Jain][1], this results in smaller number of variables and clauses, which helps when the input size is huge. The *exactly one* encoding is encoded as *at least one* and *at most one* encodings, in which the *at most one* encoding uses commander encoding by [Klieber and Kwon][2] that results in lesser clauses and thus faster solving by SAT Solver.
 
